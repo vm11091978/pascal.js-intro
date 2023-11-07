@@ -3,6 +3,7 @@ import { Multiplication } from '../SyntaxAnalyzer/Tree/Multiplication';
 import { Subtraction } from '../SyntaxAnalyzer/Tree/Subtraction';
 import { Division } from '../SyntaxAnalyzer/Tree/Division';
 import { NumberConstant } from '../SyntaxAnalyzer/Tree/NumberConstant';
+import { Inversion } from '../SyntaxAnalyzer/Tree/Inversion';
 import { NumberVariable } from './Variables/NumberVariable';
 
 export class Engine
@@ -79,8 +80,12 @@ export class Engine
 
     evaluateMultiplier(expression)
     {
+        let expr = expression.symbol;
+
         if (expression instanceof NumberConstant) {
-            return new NumberVariable(expression.symbol.value);
+            return new NumberVariable(expr.value);
+        } else if (expression instanceof Inversion && expr instanceof NumberConstant) {
+            return new NumberVariable(-expr.symbol.value);
         } else {
             throw 'Number Constant expected.';
         }
