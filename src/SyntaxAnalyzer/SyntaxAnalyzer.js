@@ -3,6 +3,7 @@ import { Division } from './Tree/Division';
 import { Addition } from './Tree/Addition';
 import { Subtraction } from './Tree/Subtraction';
 import { NumberConstant } from './Tree/NumberConstant';
+import { Inversion } from './Tree/Inversion';
 import { SymbolsCodes } from '../LexicalAnalyzer/SymbolsCodes';
 
 /**
@@ -27,6 +28,8 @@ export class SyntaxAnalyzer
     {
         if (this.symbol.symbolCode === expectedSymbolCode) {
             this.nextSym();
+        } else if (this.symbol.symbolCode === SymbolsCodes.endOfLine) {
+            throw `End of line, next symbol expected but not found!`;
         } else {
             throw `${expectedSymbolCode} expected but ${this.symbol.symbolCode} found!`;
         }
@@ -104,10 +107,16 @@ export class SyntaxAnalyzer
     // Разбор множителя
     scanMultiplier()
     {
+        let minus = false;
+        if ( this.symbol !== null && this.symbol.symbolCode === SymbolsCodes.minus) {
+            minus = true;
+            this.nextSym();
+        }
         let integerConstant = this.symbol;
 
         this.accept(SymbolsCodes.integerConst);
+        let integer = new NumberConstant(integerConstant);
 
-        return new NumberConstant(integerConstant);
+        return minus ? new Inversion(integer) : integer;
     }
 };
