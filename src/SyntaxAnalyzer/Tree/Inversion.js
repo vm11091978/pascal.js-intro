@@ -2,8 +2,9 @@ import { TreeNodeBase } from './TreeNodeBase.js';
 
 export class Inversion extends TreeNodeBase
 {
-    constructor(symbol)
+    constructor(symbol, expr)
     {
         super(symbol);
+        this.expr = expr;
     }
 }
