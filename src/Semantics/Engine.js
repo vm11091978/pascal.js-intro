@@ -85,7 +85,7 @@ export class Engine
         if (expression instanceof NumberConstant) {
             return new NumberVariable(expr.value);
         } else if (expression instanceof Inversion && expr instanceof NumberConstant) {
-            return new NumberVariable(-expr.symbol.value);
+            return new NumberVariable(Number(expression.expr.concat(expr.symbol.value)));
         } else {
             throw 'Number Constant expected.';
         }
