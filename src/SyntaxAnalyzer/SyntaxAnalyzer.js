@@ -117,6 +117,6 @@ export class SyntaxAnalyzer
         this.accept(SymbolsCodes.integerConst);
         let integer = new NumberConstant(integerConstant);
 
-        return minus ? new Inversion(integer) : integer;
+        return minus ? new Inversion(integer, SymbolsCodes.minus) : integer;
     }
 };
